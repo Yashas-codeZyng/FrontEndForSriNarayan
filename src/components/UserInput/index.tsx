@@ -28,22 +28,26 @@ const UserInput = () => {
         if (e.key === "Enter" && userInputRef.current) {
             e.preventDefault();
             const userInput: string = userInputRef.current.value;
-            // console.log(userInput);
             if (userInput.trim()) {
                 dispatch(addMsg({ user: "user", message: userInput }));
                 userInputRef.current.value = "";
-                const url = "";
-                const payload = { "email_text": userInput };
+                const payload = { email_text: userInput };  // Directly create the payload with email_text
+                const url = "http://127.0.0.1:8000/summarize_email";
                 fetch(url, {
                     method: "POST",
-                    headers: { "content-type": "application/json" },
-                    body: JSON.stringify({ payload })
-                }).then((res) => { return res.json() })
-                    .then((data) => dispatch(addMsg({ user: "bot", message: data })))
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)  // Send payload directly
+                }).then(res => res.json())  // Parse JSON response
+                    .then(data => {
+                        dispatch(addMsg({ user: "bot", message: data.summary }));  // Access the summary from response
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
         }
     };
-    //;
+
     return <UserInputContainerStyledBox>
         <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} accept=".txt" />
         <IconButton sx={{ marginBottom: "5px" }} onClick={handleIconButtonClick}>

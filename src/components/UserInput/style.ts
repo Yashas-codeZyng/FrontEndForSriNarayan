@@ -7,7 +7,7 @@ export const UserInputStyledTextField = styled(TextField)(() => ({
 export const UserInputContainerStyledBox = styled(Box)(() => ({
     height: "40px",
     borderRadius: '50px',
-    width: '50%',
+    width: '40vw',
     background: '#2e2f2e',
     position: 'fixed',
     bottom: "30px",
