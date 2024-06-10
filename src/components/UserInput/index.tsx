@@ -32,16 +32,18 @@ const UserInput = () => {
             if (userInput.trim()) {
                 dispatch(addMsg({ user: "user", message: userInput }));
                 userInputRef.current.value = "";
-                // const url = "";
-                // fetch(url, {
-                //     method: "POST",
-                //     headers: { "content-type": "application/json" },
-                //     body: JSON.stringify({ userInput })
-                // }).then((res)=>{dispatch(addMsg({ user: "bot", message: res.massage }));})
+                const url = "";
+                const payload = { "email_text": userInput };
+                fetch(url, {
+                    method: "POST",
+                    headers: { "content-type": "application/json" },
+                    body: JSON.stringify({ payload })
+                }).then((res) => { return res.json() })
+                    .then((data) => dispatch(addMsg({ user: "bot", message: data })))
             }
         }
     };
-
+    //;
     return <UserInputContainerStyledBox>
         <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} accept=".txt" />
         <IconButton sx={{ marginBottom: "5px" }} onClick={handleIconButtonClick}>
