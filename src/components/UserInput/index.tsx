@@ -38,12 +38,12 @@ const UserInput = () => {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)  // Send payload directly
                 }).then(res => res.json())  // Parse JSON response
-                  .then(data => {
-                      dispatch(addMsg({ user: "bot", message: data.summary }));  // Access the summary from response
-                  })
-                  .catch(error => {
-                      console.error('Error:', error);
-                  });
+                    .then(data => {
+                        dispatch(addMsg({ user: "bot", message: data.summary }));  // Access the summary from response
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
             }
         }
     };
